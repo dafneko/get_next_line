@@ -11,6 +11,16 @@
 /* ************************************************************************** */
 #include "get_next_line.h"
 
+size_t	ft_strlen(const char *s)
+{
+	size_t	i;
+
+	i = 0;
+	while (*s++)
+		i++;
+	return (i);
+}
+
 void	*ft_calloc(size_t count, size_t size)
 {
 	unsigned char	*m;
@@ -25,6 +35,17 @@ void	*ft_calloc(size_t count, size_t size)
 		m[i] = 0;
 		i++;
 	}
+	return (m);
+}
+
+char	*ft_strdup(const char *s)
+{
+	char	*m;
+
+	m = (char *)malloc(ft_strlen(s) + 1);
+	if (!m)
+		return (0);
+	ft_strlcpy(m, s, ft_strlen(s) + 1);
 	return (m);
 }
 
