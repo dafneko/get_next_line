@@ -15,7 +15,8 @@
 
 # include <stdlib.h>
 # include <fcntl.h>
-
+# include <unistd.h>
+# define BUFFER_SIZE 42
 // utils.c
 void	*ft_calloc(size_t count, size_t size);
 char	*ft_strchr(const char *s, int c);

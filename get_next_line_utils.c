@@ -38,6 +38,20 @@ void	*ft_calloc(size_t count, size_t size)
 	return (m);
 }
 
+size_t	ft_strlcpy(char *dst, const char *src, size_t size)
+{
+	size_t	slength;
+
+	slength = ft_strlen(src);
+	if (!size)
+		return (slength);
+	size -= 1;
+	while ((*src) && size--)
+		*dst++ = *src++;
+	*dst = '\0';
+	return (slength);
+}
+
 char	*ft_strdup(const char *s)
 {
 	char	*m;
