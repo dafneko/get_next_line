@@ -26,17 +26,18 @@ char *get_next_line(int fd)
 	while (v.br > 0 && (!ft_strchr(v.buf, '\n')))
 	{
 		v.br = read(fd, v.buf, BUFFER_SIZE);
+	printf("buf = %s\n", v.buf);
+
 		if (!v.copy)
 			v.copy = ft_strdup("");
-		v.temp = v.copy;
 		v.copy = ft_strjoin(v.copy, v.buf);
-		free(v.temp);
-		v.temp = NULL;
+	printf("copy = %s\n", v.copy);
+
 	}
 	v.end = ft_strchr(v.copy, '\n');
-	v.line = ft_substr(v.copy, 0, v.end - v.copy); // how to find the start?
-	// printf("line = %s\n", v.line);
-	return (NULL);
+	v.line = ft_substr(v.copy, 0, v.end - v.copy);
+	printf("line = %s\n", v.line);
+	return (free(v.copy), NULL);
 }
 
 int	main()
