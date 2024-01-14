@@ -65,6 +65,8 @@ char	*ft_strdup(const char *s)
 
 char	*ft_strchr(const char *s, int c)
 {
+	if (!s)
+		return (0);
 	while (*s)
 	{
 		if (*s == (char)c)
@@ -74,4 +76,54 @@ char	*ft_strchr(const char *s, int c)
 	if ((char)c == '\0')
 		return ((char *)s);
 	return (0);
+}
+
+char	*ft_substr(char const *s, size_t start, size_t len)
+{
+	char	*sub;
+
+	if (!s)
+		return (0);
+	if (ft_strlen(s) < start)
+		return (ft_strdup(""));
+	if (len > ft_strlen(s + start))
+		len = ft_strlen(s + start);
+	sub = ft_calloc(len + 1, sizeof(char));
+	if (!sub)
+		return (0);
+	ft_strlcpy(sub, &s[start], len + 1);
+	return (sub);
+}
+
+char	*ft_strjoin(char const *s1, char const *s2)
+{
+	char	*new;
+	size_t	size;
+
+	size = ft_strlen(s1) + ft_strlen(s2) + 1;
+	new = ft_calloc(size, sizeof(char));
+	if (!new)
+		return (0);
+	ft_strlcpy(new, s1, ft_strlen(s1) + 1);
+	ft_strlcat(new, s2, size);
+	return (new);
+}
+
+size_t	ft_strlcat(char *dst, const char *src, size_t size)
+{
+	size_t	slen;
+	size_t	dlen;
+
+	slen = ft_strlen(src);
+	dlen = ft_strlen(dst);
+	if ((!dst || !src))
+		return (0);
+	if (dlen >= size)
+		return (slen + size);
+	while ((*dst) && --size > 0)
+		dst++;
+	while ((*src) && size-- > 1)
+		*dst++ = *src++;
+	*dst = '\0';
+	return (slen + dlen);
 }
