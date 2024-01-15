@@ -52,17 +52,6 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t size)
 	return (slength);
 }
 
-char	*ft_strdup(const char *s)
-{
-	char	*m;
-
-	m = (char *)malloc(ft_strlen(s) + 1);
-	if (!m)
-		return (0);
-	ft_strlcpy(m, s, ft_strlen(s) + 1);
-	return (m);
-}
-
 char	*ft_strchr(const char *s, int c)
 {
 	if (!s)
@@ -78,27 +67,12 @@ char	*ft_strchr(const char *s, int c)
 	return (0);
 }
 
-char	*ft_substr(char const *s, size_t start, size_t len)
-{
-	char	*sub;
-
-	if (!s)
-		return (0);
-	if (ft_strlen(s) < start)
-		return (ft_strdup(""));
-	if (len > ft_strlen(s + start))
-		len = ft_strlen(s + start);
-	sub = ft_calloc(len + 1, sizeof(char));
-	if (!sub)
-		return (0);
-	ft_strlcpy(sub, &s[start], len + 1);
-	return (sub);
-}
-
 char	*ft_strjoin(char const *s1, char const *s2)
 {
 	char	*new;
 	size_t	size;
+	if (!s1)
+		s1 = ft_calloc(1, sizeof(char));
 
 	size = ft_strlen(s1) + ft_strlen(s2) + 1;
 	new = ft_calloc(size, sizeof(char));
@@ -106,7 +80,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		return (0);
 	ft_strlcpy(new, s1, ft_strlen(s1) + 1);
 	ft_strlcat(new, s2, size);
-	free(s1);
+	free((void *)s1);
 	return (new);
 }
 

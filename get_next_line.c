@@ -17,7 +17,8 @@ char *get_next_line(int fd)
 
 	if (fd < 0 || BUFFER_SIZE < 1)
 		return (NULL);
-	v.buf = ft_calloc(BUFFER_SIZE + 1, sizeof(v.buf));
+	// printf("buf = %s\n", v.buf);
+	v.buf = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
 	if (!v.buf)
 		return (NULL);
 	if (v.br == -1)
@@ -26,21 +27,25 @@ char *get_next_line(int fd)
 	while (v.br > 0 && (!ft_strchr(v.buf, '\n')))
 	{
 		v.br = read(fd, v.buf, BUFFER_SIZE);
-	printf("buf = %s\n", v.buf);
-
-		if (!v.copy)
-			v.copy = ft_strdup("");
-		v.copy = ft_strjoin(v.copy, v.buf);
-	printf("copy = %s\n", v.copy);
-
+		v.line = ft_strjoin(v.next, v.buf);
+		printf("buf = %s\n", v.buf);
 	}
-	v.end = ft_strchr(v.copy, '\n');
-	v.line = ft_substr(v.copy, 0, v.end - v.copy);
-	printf("line = %s\n", v.line);
-	return (free(v.copy), NULL);
+	if (!v.line)
+		return(NULL);
+	v.end = ft_strchr(v.line, '\n');
+	while (*(v.buf) && v.i < (v.end - v.line + 1))
+	{
+		v.i++;
+		v.buf++;
+	}
+	v.next = ft_strjoin(v.buf, "\0");
+	v.line[v.end - v.line + 1] = '\0';
+	printf("next = %s\n", v.next);
+	// printf("res = %s\n", v.line);
+	return (free(v.line), v.line = NULL, NULL);
 }
 
-int	main()
+int main()
 {
 	const char *file;
 	int newFd;
@@ -49,7 +54,6 @@ int	main()
 	newFd = open(file, O_RDONLY, 0644);
 
 	get_next_line(newFd);
-	get_next_line(newFd);
-	get_next_line(newFd);
-
+	// get_next_line(newFd);
+	// get_next_line(newFd);
 }
