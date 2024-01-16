@@ -28,20 +28,17 @@ char *get_next_line(int fd)
 	{
 		v.br = read(fd, v.buf, BUFFER_SIZE);
 		v.line = ft_strjoin(v.next, v.buf);
-		printf("buf = %s\n", v.buf);
+		// printf("buf = %s\n", v.buf);
 	}
 	if (!v.line)
 		return(NULL);
 	v.end = ft_strchr(v.line, '\n');
-	while (*(v.buf) && v.i < (v.end - v.line + 1))
-	{
-		v.i++;
-		v.buf++;
-	}
-	v.next = ft_strjoin(v.buf, "\0");
+	v.buf += (v.end - v.line + 1);
+	v.next = ft_strjoin(v.buf, "");
 	v.line[v.end - v.line + 1] = '\0';
-	printf("next = %s\n", v.next);
-	// printf("res = %s\n", v.line);
+	printf("res = %s\n", v.line);
+	free(v.buf);
+	v.buf = NULL;
 	return (free(v.line), v.line = NULL, NULL);
 }
 
