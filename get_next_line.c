@@ -17,7 +17,6 @@ char *get_next_line(int fd)
 
 	if (fd < 0 || BUFFER_SIZE < 1)
 		return (NULL);
-	// printf("buf = %s\n", v.buf);
 	v.buf = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
 	if (!v.buf)
 		return (NULL);
@@ -27,18 +26,14 @@ char *get_next_line(int fd)
 	while (v.br > 0 && (!ft_strchr(v.buf, '\n')))
 	{
 		v.br = read(fd, v.buf, BUFFER_SIZE);
-		v.line = ft_strjoin(v.next, v.buf);
-		// printf("buf = %s\n", v.buf);
+		v.line = ft_strjoin(v.line, v.buf);
+		// printf("line = %s\n", v.line);
 	}
 	if (!v.line)
 		return(NULL);
-	v.end = ft_strchr(v.line, '\n');
-	v.buf += (v.end - v.line + 1);
-	v.next = ft_strjoin(v.buf, "");
-	v.line[v.end - v.line + 1] = '\0';
-	printf("res = %s\n", v.line);
-	free(v.buf);
-	v.buf = NULL;
+	v.line[ft_strchr(v.line, '\n') - v.line + 1] = '\0';
+	v.buf += (ft_strchr(v.line, '\0') - ft_strchr(v.line, '\n'));
+	printf("line 2 = %s\n", v.line);
 	return (free(v.line), v.line = NULL, NULL);
 }
 
@@ -51,6 +46,6 @@ int main()
 	newFd = open(file, O_RDONLY, 0644);
 
 	get_next_line(newFd);
-	// get_next_line(newFd);
-	// get_next_line(newFd);
+	get_next_line(newFd);
+	get_next_line(newFd);
 }

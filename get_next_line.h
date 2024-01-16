@@ -31,6 +31,7 @@ typedef struct variables
 	char *end;
 	char *line;
 	char *next;
+	char *temp;
 } vars;
 
 // utils.c
