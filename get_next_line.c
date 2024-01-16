@@ -22,19 +22,19 @@ char *get_next_line(int fd)
 		return (NULL);
 	if (v.br == -1)
 		return (free(v.buf), NULL);
+	if (v.line)
+		return(free(v.line), v.line = NULL, get_next_line(fd));
 	v.br = 1;
 	while (v.br > 0 && (!ft_strchr(v.buf, '\n')))
 	{
 		v.br = read(fd, v.buf, BUFFER_SIZE);
 		v.line = ft_strjoin(v.line, v.buf);
-		// printf("line = %s\n", v.line);
 	}
 	if (!v.line)
 		return(NULL);
 	v.line[ft_strchr(v.line, '\n') - v.line + 1] = '\0';
 	v.buf += (ft_strchr(v.line, '\0') - ft_strchr(v.line, '\n'));
-	printf("line 2 = %s\n", v.line);
-	return (free(v.line), v.line = NULL, NULL);
+	return (v.line);
 }
 
 int main()
@@ -45,7 +45,8 @@ int main()
 	file = "example";
 	newFd = open(file, O_RDONLY, 0644);
 
-	get_next_line(newFd);
-	get_next_line(newFd);
-	get_next_line(newFd);
+	printf("%s", get_next_line(newFd));
+	printf("%s", get_next_line(newFd));
+	printf("%s", get_next_line(newFd));
+
 }
