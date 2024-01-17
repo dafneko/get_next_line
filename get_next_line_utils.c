@@ -102,3 +102,14 @@ size_t	ft_strlcat(char *dst, const char *src, size_t size)
 	*dst = '\0';
 	return (slen + dlen);
 }
+
+char	*ft_strdup(const char *s)
+{
+	char	*m;
+
+	m = (char *)malloc(ft_strlen(s) + 1);
+	if (!m)
+		return (0);
+	ft_strlcpy(m, s, ft_strlen(s) + 1);
+	return (m);
+}
