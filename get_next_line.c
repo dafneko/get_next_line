@@ -17,24 +17,24 @@ char *get_next_line(int fd)
 
 	if (fd < 0 || BUFFER_SIZE < 1)
 		return (NULL);
-	v.buf = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
-	if (!v.buf)
-		return (NULL);
-	if (v.br == -1)
+	if (v.br < 0)
 		return (free(v.buf), NULL);
 	if (v.line)
 		return(free(v.line), v.line = NULL, get_next_line(fd));
-	v.br = read(fd, v.buf, BUFFER_SIZE);
-	// v.br = 1;
-	while (v.br > 0 && (!ft_strchr(v.buf, '\n')))
-	{
+	if (v.buf)
 		v.line = ft_strjoin(v.line, v.buf);
-		v.br = read(fd, v.buf, BUFFER_SIZE);
-	}
+	v.buf = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
+	if (!v.buf)
+		return (NULL);
+	while ((v.br = read(fd, v.buf, BUFFER_SIZE) > 0) && (!ft_strchr(v.buf, '\n')))
+		v.line = ft_strjoin(v.line, v.buf);
+	if (ft_strchr(v.buf, '\n'))
+		v.line = ft_strjoin(v.line, v.buf);
 	if (!v.line)
 		return(NULL);
-	v.line[ft_strchr(v.line, '\n') - v.line + 1] = '\0';
-	v.buf += (ft_strchr(v.buf, '\n') - v.buf);
+	if (ft_strchr(v.line, '\n'))
+		v.line[ft_strchr(v.line, '\n') - v.line + 1] = '\0';
+	v.buf += (ft_strchr(v.buf, '\n') - v.buf + 1);
 	return (v.line);
 }
 
@@ -44,11 +44,12 @@ int main()
 	int newFd;
 
 	file = "example";
+
 	newFd = open(file, O_RDONLY, 0644);
 
-	// get_next_line(newFd);
-	// get_next_line(newFd);
-	// get_next_line(newFd);
+	//get_next_line(newFd);
+	//get_next_line(newFd);
+	//get_next_line(newFd);
 
 	printf("%s", get_next_line(newFd));
 	printf("%s", get_next_line(newFd));
@@ -61,6 +62,15 @@ int main()
 	printf("%s", get_next_line(newFd));
 	printf("%s", get_next_line(newFd));
 	printf("%s", get_next_line(newFd));
-
-
+	printf("%s", get_next_line(newFd));
+	printf("%s", get_next_line(newFd));
+	printf("%s", get_next_line(newFd));
+	printf("%s", get_next_line(newFd));
+	printf("%s", get_next_line(newFd));
+	printf("%s", get_next_line(newFd));
+	printf("%s", get_next_line(newFd));
+	printf("%s", get_next_line(newFd));
+	printf("%s", get_next_line(newFd));
+	printf("%s", get_next_line(newFd));
+	printf("%s", get_next_line(newFd));
 }
