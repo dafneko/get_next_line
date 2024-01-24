@@ -1,6 +1,6 @@
 NAME = gnl.a
 HEADERDIR = .
-SRC = get_next_line.c get_next_line_utils.c 
+SRC = get_next_line.c get_next_line_utils.c get_next_line_bonus.c get_next_line_utils_bonus.c
 CC = cc
 CCFLAGS = -Wall -Wextra -Werror
 OBJ = $(SRC:.c=.o)
